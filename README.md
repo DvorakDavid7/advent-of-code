@@ -1,3 +1,2 @@
-# :christmas_tree: advent-of-code :christmas_tree:
+# :christmas_tree: advent-of-code
 advent of code 2023
-
