@@ -47,7 +47,6 @@ function part2() {
     const data = String(bff).split("\n")
 
     let sum = 0
-    let i = 1
     for (const line of data) {
         const arr: IndexValue[] = []
         for (const num of nums) {
@@ -79,12 +78,12 @@ function part1() {
 
     let sum = 0
     for (const line of data) {
-        const chars = line.split("")
+        const output = line.split("")
             .map(char => isNaN(parseInt(char)) ? 0 : parseInt(char))
             .filter(dig => dig !== 0)
             .map(dig => String(dig))
 
-        const dig = parseInt(chars[0] + chars[chars.length - 1])
+        const dig = parseInt(output[0] + output[output.length - 1])
         if (!isNaN(dig)) {
             sum += dig
         }
@@ -93,4 +92,9 @@ function part1() {
     console.log(sum);
 }
 
-part2()
+function main() {
+    part1()
+    part2()
+}
+
+main()
