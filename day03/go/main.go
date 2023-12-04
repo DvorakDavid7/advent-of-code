@@ -191,33 +191,29 @@ func main() {
 	for ln, line := range data {
 		i := 0
 		for i < len(line) {
-			numStart := i
-			if unicode.IsDigit(rune(line[i])) {
-				num := chopFirstNumber(line[i:])
-				numStart = i
-				i = i + len(num)
-
-				coords := NumCoords{
-					NumberValue: num,
-					StartIndex:  numStart,
-					LineNumber:  ln,
-				}
-				partNumber := isPartNumber(coords, data)
-				n := getAllNeighbors(coords, data)
-
-				if partNumber {
-					numInt, _ := strconv.Atoi(num)
-					sumPart1 += numInt
-				}
-
-				neighbors = append(neighbors, n...)
+			if !unicode.IsDigit(rune(line[i])) {
+				i += 1
+				continue
 			}
-			i = i + 1
+			num := chopFirstNumber(line[i:])
+			numStart := i
+			i = i + len(num)
+			coords := NumCoords{
+				NumberValue: num,
+				StartIndex:  numStart,
+				LineNumber:  ln,
+			}
+			neighbors = append(neighbors, getAllNeighbors(coords, data)...)
+			partNumber := isPartNumber(coords, data)
+			if partNumber {
+				numInt, _ := strconv.Atoi(num)
+				sumPart1 += numInt
+			}
 		}
 	}
 
 	for i, neighbor := range neighbors {
-		if neighbor.Symbol != rune('*') {
+		if neighbor.Symbol != '*' {
 			continue
 		}
 		corespondingNeighbor := findCorespondingNeighbor(neighbors, neighbor, i)
