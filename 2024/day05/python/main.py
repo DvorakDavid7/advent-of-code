@@ -1,3 +1,4 @@
+from functools import cmp_to_key
 
 class Rec:
     left: set[int]
@@ -27,6 +28,10 @@ def fix_line(nums: list[int], cache: dict[int, Rec]) -> list[int]:
             if left.issubset(cache[candidate].left) and right.issubset(cache[candidate].right):
                 result.append(candidate)
     return result
+
+
+def fix_line2(nums: list[int], cache: dict[int, Rec]) -> list[int]:
+    return sorted(nums, key=cmp_to_key(lambda x, y: -1 if y in cache[x].left else 1))
 
 
 def main():
