@@ -13,8 +13,7 @@ def bfs(x, y, plot):
     queue = deque([(x, y)])
     area = []
     visited[x][y] = True
-
-    fences[(x, y)] = 0
+    fences = 0
 
     while queue:
         cx, cy = queue.popleft()
@@ -23,22 +22,18 @@ def bfs(x, y, plot):
             nx, ny = cx + dx, cy + dy
 
             if not (0 <= nx < rows and 0 <= ny < cols) or grid[nx][ny] != plot:
-                fences[(cx, cy)] += 1
+                fences += 1
 
             if 0 <= nx < rows and 0 <= ny < cols and not visited[nx][ny] and grid[nx][ny] == plot:
                 visited[nx][ny] = True
                 queue.append((nx, ny))
-    return area
+    return area, fences
 
+result = 0
 for i in range(rows):
     for j in range(cols):
         plot = grid[i][j]
         if not visited[i][j]:
-            areas[plot].append(bfs(i, j, plot))
-
-result = 0
-for plot, areas in areas.items():
-    for area in areas:
-        result += len(area) * sum([fences[a] for a in area])
-
+            area, fences = bfs(i, j, plot)
+            result += len(area) * fences
 print(result)
